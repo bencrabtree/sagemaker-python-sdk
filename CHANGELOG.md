@@ -36,9 +36,10 @@
 
 - change order of pipelines topics
 - Explain the ClarifyCheckStep and QualityCheckStep parameters
-- fix the ClarifyCheckStep documentation to mention PDP
+- # fix the ClarifyCheckStep documentation to mention PDP
 
-## v2.207.1 (2024-02-06)
+* Telemetry metrics
+* TGI 1.4.0
 
 ### Bug Fixes and Other Changes
 
