@@ -15,16 +15,6 @@ from __future__ import absolute_import
 from unittest.mock import Mock
 from sagemaker.jumpstart.types import HubArnExtractedInfo
 from sagemaker.jumpstart.constants import JUMPSTART_DEFAULT_REGION_NAME
-from sagemaker.jumpstart.enums import JumpStartScriptScope
-from sagemaker.jumpstart.curated_hub import utils
-from unittest.mock import patch
-from sagemaker.jumpstart.curated_hub.types import (
-    CuratedHubUnsupportedFlag,
-    HubContentSummary,
-    summary_from_list_api_response,
-    summary_list_from_list_api_response,
-)
-from sagemaker.jumpstart.types import HubContentType
 
 
 def test_get_info_from_hub_resource_arn():
