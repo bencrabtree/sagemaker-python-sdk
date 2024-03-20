@@ -34,6 +34,7 @@ from sagemaker.jumpstart.constants import (
     DEFAULT_JUMPSTART_SAGEMAKER_SESSION,
     MODEL_TYPE_TO_MANIFEST_MAP,
     MODEL_TYPE_TO_SPECS_MAP,
+    DEFAULT_JUMPSTART_SAGEMAKER_SESSION,
 )
 from sagemaker.jumpstart.exceptions import (
     get_wildcard_model_version_msg,
@@ -434,7 +435,6 @@ class JumpStartModelsCache:
                 formatted_content=utils.get_formatted_manifest(formatted_body),
                 md5_hash=etag,
             )
-
         if data_type in {
             JumpStartS3FileType.OPEN_WEIGHT_SPECS,
             JumpStartS3FileType.PROPRIETARY_SPECS,
@@ -442,7 +442,9 @@ class JumpStartModelsCache:
             formatted_body, _ = self._get_json_file(id_info, data_type)
             model_specs = JumpStartModelSpecs(formatted_body)
             utils.emit_logs_based_on_model_specs(model_specs, self.get_region(), self._s3_client)
-            return JumpStartCachedContentValue(formatted_content=model_specs)
+            return JumpStartCachedContentValue(
+                formatted_content=model_specs
+            )
 
         if data_type == HubContentType.MODEL:
             hub_name, _, model_name, model_version = hub_utils.get_info_from_hub_resource_arn(
@@ -459,8 +461,14 @@ class JumpStartModelsCache:
                 DescribeHubContentsResponse(hub_model_description), is_hub_content=True
             )
 
-            utils.emit_logs_based_on_model_specs(model_specs, self.get_region(), self._s3_client)
-            return JumpStartCachedContentValue(formatted_content=model_specs)
+            utils.emit_logs_based_on_model_specs(
+                model_specs,
+                self.get_region(),
+                self._s3_client
+            )
+            return JumpStartCachedContentValue(
+                formatted_content=model_specs
+            )
 
         if data_type == HubType.HUB:
             hub_name, _, _, _ = hub_utils.get_info_from_hub_resource_arn(id_info)
@@ -470,7 +478,9 @@ class JumpStartModelsCache:
                 formatted_content=DescribeHubResponse(hub_description)
             )
 
-        raise ValueError(self._file_type_error_msg(data_type))
+        raise ValueError(
+            self._file_type_error_msg(data_type)
+        )
 
     def get_manifest(
         self,
